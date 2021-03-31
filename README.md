@@ -42,3 +42,26 @@ private static boolean isPalindrome(int n){
         return n == rel;
     }
 ~~~
+
+###唯一分解定理
+
+    任何一个数(>1)数能且只能分解为一组质数的乘积，且这一组质数若按顺序排列是唯一的。
+    如果想求n的质因数，只需用n从2开始依次除以小于它的数，当i能除尽n时，i就是一个质因子，再将n/i赋值给n，继续这个过程直至n==1
+
+~~~
+public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int copy = n;
+        System.out.printf("%d的质因子有",n);
+        while (n > 1){
+            for (int i = 2; i < copy; i++) {
+                if (n % i == 0){
+                    System.out.print(i+"");
+                    n /= i;
+                    break;
+                }
+            }
+        }
+    }
+~~~
