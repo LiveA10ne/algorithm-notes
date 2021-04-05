@@ -65,3 +65,101 @@ public static void main(String[] args) {
         }
     }
 ~~~
+
+###快速输入输出
+
+####BufferedReader
+
+~~~
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class BufferedReaderInput {
+	public static void main(String[] args) throws IOException {
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in)); // 输入
+		String line = in.readLine(); // 输入的一行字符
+		System.out.println(line);
+	}
+}
+
+~~~
+
+####StreamTokenizer
+
+    这种方式需要处理一个异常，try的话代码太多了，直接抛出就好。
+    
+    主要用于分词。
+    
+    注意：StreamTokenizer只能接收数字或字母，如果输入除空格和回车以外的字符
+    （如：~!@#$%^&*()_+{}:<>?)无法识别，会显示null。
+    
+    同时，如果该输入字符串时却输入数字会显示null，该输入数字时输入字符串也会显示null
+
+~~~
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StreamTokenizer;
+
+public class StreamTokenizerInput {
+	public static void main(String[] args) throws IOException {
+		// Input(); // 输入字符串和数字
+		// LoopInputString(); // 循环输入字符串
+		LoopInputDouble(); // 循环输入数字
+	}
+
+	/** 输入字符串和数字 */
+	public static void Input() throws IOException {
+		StreamTokenizer in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
+
+		in.nextToken(); // 解析下一个标记。每次调用sval或nval时候都需要调用一下
+		String str = in.sval; // 输入字符串
+		System.out.println(str);
+
+		in.nextToken(); // 解析下一个标记。每次调用sval或nval时候都需要调用一下
+		double num = in.nval; // 输入数字
+		System.out.println(num);
+	}
+	
+	/** 循环输入字符串 */
+	public static void LoopInputString() throws IOException {
+		StreamTokenizer in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
+		while (in.nextToken() != StreamTokenizer.TT_EOL) { // 当下一个输入不是行末尾时
+			String str = in.sval; // 输入字符串
+			System.out.println(str);
+		}
+	}
+	
+	/** 循环输入数字 */
+	public static void LoopInputDouble() throws IOException {
+		StreamTokenizer in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
+		while (in.nextToken() != StreamTokenizer.TT_EOL) { // 当下一个输入不是行末尾时
+			double num = in.nval; // 输入数字
+			System.out.println(num);
+		}
+	}
+}
+~~~
+
+####PrintWriter
+
+~~~
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+
+public class PrintWriterOutput {
+	public static void main(String[] args) throws IOException {
+		PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+		String str = "这里是要输出的内容!";
+		out.print(str); // 输出后不换行
+		out.println(str); // 输出后换行
+		out.printf("%s", str); // 格数化输出
+		out.flush(); // 记得刷新一下在控制台输出
+		out.close();
+	}
+}
+~~~
