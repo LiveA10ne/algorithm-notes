@@ -63,7 +63,7 @@ private static void quickSort(int left, int right) {
 
 ####全排列
 
-    输出自然数 11 到 nn 所有不重复的排列，即 nn 的全排列，
+    输出自然数 1 到 n 所有不重复的排列，即 n 的全排列，
 
     要求所产生的任一数字序列中不允许出现重复的数字。
 
