@@ -1,6 +1,64 @@
 #算法笔记
 
 ------------------
+###优先队列
+
+    类 PriorityQueue<E> 一个基于优先级堆的无界优先级队列。
+
+    此队列的头 是按指定排序方式确定的最小 元素。
+
+    实现注意事项：
+
+    此实现为排队和出队方法（offer、poll、remove() 和 add）提供 O(log(n)) 时间；
+    
+    为 remove(Object) 和 contains(Object) 方法提供线性时间；
+    
+    为获取方法（peek、element 和 size）提供固定时间。
+
+    合并果子问题、霍夫曼编码问题都可以用这个数据结构；
+
+    合并果子的代码示例如下
+
+    题目描述：
+
+    在一个果园里，多多已经将所有的果子打了下来，而且按果子的不同种类分成了不同的堆。多多决定把所有的果子合成一堆。
+
+    每一次合并，多多可以把两堆果子合并到一起，消耗的体力等于两堆果子的重量之和。可以看出，所有的果子经过 n-1n−1 次合并之后， 就只剩下一堆了。多多在合并果子时总共消耗的体力等于每次合并所耗体力之和。
+    
+    因为还要花大力气把这些果子搬回家，所以多多在合并果子时要尽可能地节省体力。假定每个果子重量都为 11 ，并且已知果子的种类 数和每种果子的数目，你的任务是设计出合并的次序方案，使多多耗费的体力最少，并输出这个最小的体力耗费值。
+    
+    例如有 33 种果子，数目依次为 11 ， 22 ， 99 。可以先将 11 、 22 堆合并，新堆数目为 33 ，耗费体力为 33 。接着，将新堆与原先的第三堆合并，又得到新的堆，数目为 1212 ，耗费体力为 1212 。所以多多总共耗费体力 =3+12=15=3+12=15 。可以证明 1515 为最小的体力耗费值。
+
+~~~
+public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StreamTokenizer st = new StreamTokenizer(br);
+		PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+		
+		st.nextToken();
+		int n = (int)st.nval;
+		PriorityQueue<Integer> queue = new PriorityQueue<>();
+		for (int i = 0; i < n; i++) {
+			st.nextToken();
+			queue.offer((int)st.nval);
+		}
+		//记录体力耗费总和
+		int sum = 0;
+		for (int i = 0; i < n - 1; i++) {
+		    //获取最小值并从队列中移除
+			int min1 = queue.poll();
+			int min2 = queue.poll();
+			int com = min1 + min2;
+			//将新合成的数入队
+			queue.offer(com);
+			sum += com;
+		}
+		pw.print(sum);
+		pw.close();
+	}
+~~~
+
 
 ###排序
 
@@ -494,11 +552,71 @@ public class Main {
 
 ~~~
 
+###差分
 
+    题1：铺设道路
 
+    春春是一名道路工程师，负责铺设一条长度为 nn 的道路。
 
+    铺设道路的主要工作是填平下陷的地表。整段道路可以看作是 n 块首尾相连的区域，一开始，第 i 块区域下陷的深度为 d_i
+    
+    春春每天可以选择一段连续区间[L,R]，填充这段区间中的每块区域，让其下陷深度减少 1。
 
+    在选择区间时，需要保证，区间内的每块区域在填充前下陷深度均不为 0 。
+    
+    春春希望你能帮他设计一种方案，可以在最短的时间内将整段道路的下陷深度都变为 0。
 
+        输入：6   
+            4 3 2 5 3 5
+        输出：9
+
+    题2：积木大赛
+
+    春春幼儿园举办了一年一度的“积木大赛”。
+
+    今年比赛的内容是搭建一座宽度为nn的大厦，大厦可以看成由n块宽度为1的积木组成，第i块积木的最终高度需要是h_i
+
+    在搭建开始之前，没有任何积木（可以看成n块高度为0的积木）。接下来每次操作，小朋友们可以选择一段连续区间[l, r]，然后将第L块到第R块之间（含第L 块和第 R块）所有积木的高度分别增加1。
+    
+    小M是个聪明的小朋友，她很快想出了建造大厦的最佳策略，使得建造所需的操作次数最少。但她不是一个勤于动手的孩子，所以想请你帮忙实现这个策略，并求出最少的操作次数。
+    
+        输入：5
+            2 3 4 1 2
+        输出：5
+
+    思路：
+
+    我们将两个相邻的坑看做一组（q，p表示两坑深度）
+
+    1.q<p，即左边的坑比右边浅，左边的填完坑后，右边的还差一点，那么填坑次数s加上两坑的深度差p-q（相当于填好了右坑）。
+    
+    2.q>=p，即左边的坑比右边深，说明只要左边的坑填好了，那么右边的坑肯定也能填好，所以不需要增加填坑次数s。
+~~~
+public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StreamTokenizer st = new StreamTokenizer(br);
+		PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+		
+		st.nextToken();
+		int n = (int)st.nval;
+		int[] arr = new int[n];
+		for (int i = 0; i < arr.length; i++) {
+			st.nextToken();
+			arr[i] = (int)st.nval;
+		}
+		
+		int sum = 0;
+		for (int i = 1; i < arr.length; i++) {
+			if (arr[i] > arr[i-1]) {
+				sum += arr[i] - arr[i-1];
+			}
+		}
+		sum+= arr[0];
+		pw.print(sum);
+		pw.close();
+	}
+~~~
 
 
 
