@@ -648,6 +648,115 @@ class Main{
 
 -------------------------
 
+##搜索
+
+[八皇后](https://www.luogu.com.cn/problem/P1219)
+
+```java
+import java.io.*;
+
+/**
+ * @author Somnambulist
+ * @date 2021/4/13 16:48
+ */
+public class 八皇后 {
+
+    private static int n;
+    private static int[][] matrix;
+    private static int[] arr;
+    private static StringBuilder ans = new StringBuilder();
+    private static int sum = 0;
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StreamTokenizer st = new StreamTokenizer(br);
+        PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+
+        try {
+            st.nextToken();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        n = (int)st.nval;
+        matrix  = new int[n+1][n+1];
+        arr = new int[n+1];
+
+        dfs(1);
+
+        ans.append(sum);
+        pw.print(ans);
+        pw.close();
+    }
+
+    //k表示第k行，arr[k] = i 记录第k行皇后的列
+    private static void dfs(int k) {
+        //所有行放好皇后
+        if (k > n) {
+            sum++;
+            if (sum <=3) {
+                for (int i = 1; i <=n ; i++) {
+                    ans.append(arr[i]).append(" ");
+                }
+                ans.append("\n");
+            }
+            return;
+        }
+        for (int i = 1; i <=n; i++) {
+            //判断(k,i)是否可以放皇后
+            if (check(k, i)) {
+                //标记第k行皇后的列
+                arr[k] = i;
+                //将皇后的位置标记为1
+                matrix[k][i] = 1;
+                dfs(k+1);
+                matrix[k][i] = 0;
+            }
+        }
+    }
+
+    //判断该位置是否可以放皇后
+    private static boolean check(int r, int c) {
+        for (int i = 1; i <= n; i++) {
+            if (matrix[r][i] != 0) {
+                return false;
+            }
+        }
+        for (int i = 1; i <= n; i++) {
+            if (matrix[i][c] != 0) {
+                return false;
+            }
+        }
+        int x = r, y = c;
+        while (x < n && y < n) {
+            if (matrix[++x][++y] != 0) {
+                return false;
+            }
+        }
+        x = r;
+        y= c;
+        while (x > 1 && y > 1) {
+            if (matrix[--x][--y] != 0) {
+                return false;
+            }
+        }
+        while (r < n && c > 1) {
+            if (matrix[++r][--c] != 0) {
+                return false;
+            }
+        }
+        while (r > 1 && c < n) {
+            if (matrix[--r][++c] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+```
+
+-------------------
 
 ##注意
 
