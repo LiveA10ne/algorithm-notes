@@ -758,10 +758,87 @@ public class 八皇后 {
 
 -------------------
 
+##0/1背包
+
+[0/1背包介绍](https://www.cnblogs.com/mfrank/p/10533701.html)
+
+    0/1背包是动态规划问题，只有一个容量有限的背包，总容量为c，有n个可待选择的物品，
+
+    每个物品只有一件，它们都有各自的重量和价值，你需要从中选择合适的组合来使得你背包中的物品总价值最大。
+
+    第11届蓝桥杯分配口罩问题就是一个变形的0/1背包问题
+
+[分配口罩](https://blog.csdn.net/qq_43416157/article/details/108975703)
+
+```java
+/**
+ * @author Somnambulist
+ * @date 2021/4/14 16:54
+ */
+public class 分配口罩 {
+
+    private static int[] arr = {
+            0,
+            9090400,
+            8499400,
+            5926800,
+            8547000,
+            4958200,
+            4422600,
+            5751200,
+            4175600,
+            6309600,
+            5865200,
+            6604400,
+            4635000,
+            10663400,
+            8087200,
+            4554000,
+    };
+   /* 使一个医院分到的口罩尽可能接近所有口罩的一半
+     能使两个医院分得的口罩差最小
+     所有口罩的一半为49045000
+     */
+    private static int[][] dp = new int[16][49045001];
+
+    public static void main(String[] args) {
+        int sum = 0;
+        for (int i :
+                arr) {
+            sum += i;
+        }
+        int a = f(15,49045000);
+        int b = sum - a;
+        System.out.println(Math.abs(a - b));
+    }
+    //
+    private static int f(int i,int j){
+        if (dp[i][j] > 0){
+            return dp[i][j];
+        }else if (i == 0 || j == 0){
+            return 0;
+        }else if (j < arr[i]){
+            dp[i][j] = f(i - 1, j);
+            return dp[i][j];
+        }else {
+            dp[i][j] = Math.max(f(i - 1,j),f(i - 1,j - arr[i]) + arr[i]);
+            return dp[i][j];
+        }
+    }
+}
+
+```
+
+-----------
+
 ##注意
 
 * 循环标记i不要在循环中参与运算
+  
 * 当前面的测试用例连续AC，后面的测试用例连续WA，很可能是数据范围不够，需要高精度
+
+* StringBuilder定义的时候一定要初始化才能拼接字符串，要不然可能会出现空指针异常
+
 
 ##RE的原因
 
