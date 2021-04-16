@@ -4,6 +4,88 @@
 
 ------------------
 
+##树
+
+    用bfs（广度优先搜索）来算树的深度
+
+[求树的深度](https://www.luogu.com.cn/problem/P4913)
+
+```java
+package 二叉树;
+
+import java.io.*;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class 二叉树深度 {
+	
+	private static int n;
+	private static Node[] arr;
+	private static int ans = 0;
+	
+	//定义树 left代表左节点下标 right代表右节点的下标
+	static class Node{
+		int left;
+		int right;
+		
+		public Node(int left, int right) {
+			// TODO Auto-generated constructor stub
+			this.left = left;
+			this.right = right;
+		}
+	}
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StreamTokenizer st = new StreamTokenizer(br);
+		PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+		
+		st.nextToken();
+		n= (int)st.nval;
+		arr = new Node[n+1];
+		for (int i = 1; i <=n; i++) {
+			st.nextToken();
+			int left = (int)st.nval;
+			st.nextToken();
+			int right = (int)st.nval;
+			arr[i] = new Node(left, right);
+		}
+		bfs();
+		
+		pw.print(ans);
+		pw.close();
+	}
+	
+	private static void bfs() {
+	    //用LinkedList实例化一个队列，队列中存放每一层的结点
+		Queue<Integer> queue = new LinkedList<>();
+		//根结点是1（第一层）
+		queue.offer(1);
+		int size = 0,cur = 0;
+		while (!queue.isEmpty()) {
+			size = queue.size();
+			//遍历一层。注意：这里的循环条件不能直接用queue.size()代替size，因为循环过程中queue.size()是变化的，所以要事先记录
+			for (int i = 0; i < size; i++) {
+			    //将上层结点弹出，下层结点加入
+				cur = queue.poll();
+				if (arr[cur].left != 0) {
+					queue.offer(arr[cur].left);
+				}
+				if (arr[cur].right != 0) {
+					queue.offer(arr[cur].right);
+				}
+			}
+			//遍历完一层，深度加一
+			ans++;
+		}
+	}
+
+}
+
+```
+
+--------------
 
 ##优先队列
 
@@ -830,6 +912,172 @@ public class 分配口罩 {
 ```
 
 -----------
+
+##并查集
+
+[并查集介绍](https://zhuanlan.zhihu.com/p/93647900/)
+
+[亲戚](https://www.luogu.com.cn/problem/P1551)
+
+[村村通](https://www.luogu.com.cn/problem/P1536)
+
+```java
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StreamTokenizer;
+
+public class Main {
+
+    //保存每个人的父结点
+    private static int[] arr = new int[5005];
+    //n个人
+    private static int n;
+    //m对亲戚关系
+    private static int m;
+    //询问次数p
+    private static int p;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StreamTokenizer st = new StreamTokenizer(br);
+        PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+
+        st.nextToken();
+        n = (int)st.nval;
+        st.nextToken();
+        m = (int)st.nval;
+        st.nextToken();
+        p = (int)st.nval;
+        //初始化每个人的父亲是他自己
+        for (int i = 1; i <= n; i++) {
+            arr[i] = i;
+        }
+        //将每对亲戚关系合并
+        for (int i = 0; i < m; i++) {
+            st.nextToken();
+            int x= (int)st.nval;
+            st.nextToken();
+            int y= (int)st.nval;
+            integrate(x,y);
+        }
+        StringBuilder sb = new StringBuilder();
+        //查询是否为亲戚
+        for (int i = 0; i < p; i++) {
+            st.nextToken();
+            int x= (int)st.nval;
+            st.nextToken();
+            int y= (int)st.nval;
+            //只能用f(x) == f(y)，不能用arr[x] == arr[y]判断，因为f(x)是用来查找根结点的，arr只是用来保存父结点
+            if (f(x) == f(y)){
+                sb.append("Yes\n");
+            }else {
+                sb.append("No\n");
+            }
+        }
+
+        pw.print(sb);
+        pw.close();
+    }
+
+    //查找根节点
+    private static int f(int x){
+        //如果父亲是自己，那就正面是根节点
+        if (arr[x] == x){
+            return  x;
+        }else {
+            //否则查找父亲的根节点
+            arr[x] = f(arr[x]);
+            return arr[x];
+        }
+    }
+
+    //合并有亲戚关系的人到一个父亲
+    private static void integrate(int x, int y){
+        arr[f(x)] = f(y);
+    }
+}
+```
+
+```java
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StreamTokenizer;
+
+public class 村村通 {
+	
+	//城市数量
+	private static int n;
+	//道路条数
+	private static int m;
+	private static int ans;
+	private static StringBuilder sb = new StringBuilder();
+	private static int[] fa = new int[10000];
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StreamTokenizer st = new StreamTokenizer(br);
+		PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+		
+		while (true) {
+			ans = 0;
+			st.nextToken();
+			n= (int)st.nval;
+			if (n == 0) {
+				break;
+			}
+			for (int i = 1; i <= n; i++) {
+				fa[i] = i;
+			}
+			st.nextToken();
+			m = (int)st.nval;
+			for (int i = 0; i < m; i++) {
+				st.nextToken();
+				int x = (int)st.nval;
+				st.nextToken();
+				int y = (int)st.nval;
+				merge(x, y);
+			}
+			//根节点的数量等于集合的数量，根节点的自己的结点就是根节点
+			for (int i = 1; i <= n; i++) {
+				if (f(i) == i) {
+					ans++;
+				}
+			}
+			//路的数量等于集合数减一
+			sb.append(ans-1).append("\n");
+		}
+		
+		pw.print(sb);
+		pw.close();
+	}
+	
+	private static int f(int x) {
+		if (fa[x] == x) {
+			return fa[x];
+		}else {
+			fa[x] = f(fa[x]);
+			return fa[x];
+		}
+	}
+	
+	private static void merge(int x, int y) {
+		fa[f(x)] = f(y);
+	}
+
+}
+
+```
+
+------------
 
 ##注意
 
