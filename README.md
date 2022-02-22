@@ -87,7 +87,7 @@ public class 二叉树深度 {
 
 --------------
 
-##优先队列
+## 优先队列
 
     类 PriorityQueue<E> 一个基于优先级堆的无界优先级队列。
 
@@ -139,9 +139,9 @@ class Main{
 
 -----
 
-##排序
+## 排序
 
-###快速排序
+### 快速排序
 ```java
 class QuickSort{
     private static int[] arr = new int[100000];
@@ -182,7 +182,7 @@ class QuickSort{
 }
 ```
 
-###冒泡排序
+### 冒泡排序
 
 ```java
 class BubbleSort{
@@ -201,9 +201,9 @@ class BubbleSort{
 ```
 ------
 
-##排列组合
+## 排列组合
 
-###全排列
+### 全排列
 
     输出自然数 1 到 n 所有不重复的排列，即 n 的全排列，
 
@@ -264,7 +264,7 @@ public class 全排列 {
 }
 ```
 
-###组合
+### 组合
 
     组合就是从n个元素中抽出r个元素，我们可以简单地将n个元素理解为自然数1,2,…,n，从中任取r个数。
 
@@ -334,7 +334,7 @@ public class 组合的输出 {
 ```
 -----------
 
-##catalan数
+## catalan数
 
     1-n依次进栈，可随机出栈。求有几种可能（即合法的出栈序列的数量）  
 
@@ -384,7 +384,7 @@ class Prime{
 ```
 ----------------
 
-##判断回文数
+## 判断回文数
 
 ```java
 class Reverse{
@@ -404,7 +404,7 @@ class Reverse{
 ```
 ------------------
 
-##唯一分解定理
+## 唯一分解定理
 
     任何一个数(>1)数能且只能分解为一组质数的乘积，且这一组质数若按顺序排列是唯一的。
 
@@ -432,9 +432,9 @@ class PrimeFactor{
 
 -------------------
 
-##快速输入输出
+## 快速输入输出
 
-###BufferedReader
+### BufferedReader
 
 ```java
 import java.io.BufferedReader;
@@ -450,7 +450,7 @@ public class BufferedReaderInput {
 }
 ```
 
-###StreamTokenizer
+### StreamTokenizer
 
     这种方式需要处理一个异常，try的话代码太多了，直接抛出就好。
     
@@ -510,7 +510,7 @@ public class StreamTokenizerInput {
 }
 ```
 
-###PrintWriter
+### PrintWriter
 
 ```java
 import java.io.IOException;
@@ -531,7 +531,7 @@ public class PrintWriterOutput {
 ```
 ---------------
 
-##定义类的比较方法
+## 定义类的比较方法
 
     类可以通过实现Comparable<T>接口来定义属于该类的比较大小的方法，比如Student类，定义排序方式：
 
@@ -633,7 +633,7 @@ public class Main {
 ```
 ----------------------
 
-##差分
+## 差分
 
 [铺设道路](https://www.luogu.com.cn/problem/P5019)
 
@@ -676,7 +676,7 @@ class Main{
 ```
 -------------------
 
-##二分法
+## 二分法
 
 [砍树](https://www.luogu.com.cn/problem/P1873)
 
@@ -730,7 +730,7 @@ class Main{
 
 -------------------------
 
-##搜索
+## 搜索
 
 [八皇后](https://www.luogu.com.cn/problem/P1219)
 
@@ -840,7 +840,7 @@ public class 八皇后 {
 
 -------------------
 
-##0/1背包
+## 0/1背包
 
 [0/1背包介绍](https://www.cnblogs.com/mfrank/p/10533701.html)
 
@@ -913,7 +913,7 @@ public class 分配口罩 {
 
 -----------
 
-##并查集
+## 并查集
 
 [并查集介绍](https://zhuanlan.zhihu.com/p/93647900/)
 
@@ -1079,9 +1079,9 @@ public class 村村通 {
 
 -----------------
 
-##进制转换
+## 进制转换
 
-###十进制转任意进制
+### 十进制转任意进制
 
 |十进制转其他进制|对应方法|返回值|
 |:-----:|:----:|:----:|
@@ -1090,14 +1090,14 @@ public class 村村通 {
 |十进制转十六进制|```	Integer.toHexString(n);```|一个十六进制字符串|
 |十进制转r进制|```Integer.toString(100, 16);```|一个r进制字符串|
 
-###任意进制转十进制
+### 任意进制转十进制
 |r进制转十进制|方法|
 |:---:|:---:|
 |radix进制的字符串s转10进制|```Integer.parseInt((String) s,(int) radix);```|
 
 ------------
 
-##注意
+## 注意
 
 * 循环标记i不要在循环中参与运算
   
@@ -1106,7 +1106,7 @@ public class 村村通 {
 * StringBuilder定义的时候一定要初始化才能拼接字符串，要不然可能会出现空指针异常
 
 
-##RE的原因
+## RE的原因
 
     大概率数组的问题，坐标超出了数组限制，访问了访问不到的下标
 
@@ -1123,7 +1123,7 @@ public class 村村通 {
 6. Comparison method violates its general contract! 比较方法违反协议，查了文档，compareTo函数要返回-1，0，1，不要忘掉0；
 
 
-##提高程序运行速度
+## 提高程序运行速度
 
 * 使用快速输入输出；
 
